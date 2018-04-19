@@ -148,7 +148,7 @@ public class Files{
       try{
          FileWriter fileW = new FileWriter(fileName, true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + username + " "  + password);
+         buffW.write(ID + " " + username + " "  + password + " false\n");
          buffW.close();
       }
       catch(Exception e){

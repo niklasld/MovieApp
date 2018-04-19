@@ -12,6 +12,7 @@ public class MovieApp{
       //MovieActorRelation mar[] = new MovieActorRelation[9000000]
       
       Files movieFile = new Files();
+      Menu startMenu = new Menu();
       
       movieFile.createFile("MovieHistory.txt");
       movieFile.createFile("Users.txt");
@@ -24,6 +25,8 @@ public class MovieApp{
       System.out.println(users[0].getID()+" "+users[0].getUsername()+" " +users[0].getPassword());
       
       movieFile.closeFile();
+      
+      startMenu.startMenu(users);
     
    }
 }

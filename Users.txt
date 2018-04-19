@@ -1,2 +1,4 @@
 1 Anders kodeord123 true
-  
+2 bent 1234 false
+3 hanne qwerty false
+4 Peter Petter false

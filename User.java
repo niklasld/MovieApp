@@ -22,6 +22,11 @@ public class User{
    public String getPassword(){
       return password;
    }
+
+   public boolean getAdmin(){
+      return admin;
+   }
+   
    public void setAdmin(boolean admin){
       this.admin = admin;
    }
