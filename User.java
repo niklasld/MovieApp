@@ -2,12 +2,13 @@ public class User{
 
    private int ID;
    private String username, password;
-   private boolean admin = false;
+   private boolean admin;
 
    public User(int ID, String username, String password, boolean admin){
       this.ID = ID;
       this.username = username;
       this.password = password;
+      this.admin = admin;
    
    }
    

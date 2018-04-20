@@ -27,7 +27,7 @@ public class Menu{
                   login(users);
                   break;
                case "2":
-                  //createUser(users);
+                  createUser(users);
                   break;
                case "3":
                   //quit
@@ -87,7 +87,45 @@ public class Menu{
       }
       
    }
-   /* NOT YET DONE
+   
+   public void createUser(User[] users){
+   
+      Files userFile = new Files();
+      
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      
+      System.out.println("Create new user:");
+      
+      System.out.print("Username: ");
+      scan = new Scanner(System.in);
+      String username = scan.next();
+      
+      System.out.print("Password: ");
+      scan = new Scanner(System.in);
+      String password = scan.next();
+      
+      //Finder det første tomme element i array
+      int idFind = 0;
+      while(users[idFind]!=null) {
+         idFind++;
+      }
+      //Sætter ID for brugeren som skal oprettes
+      int ID = idFind+1;
+      users[idFind] = new User(ID, username, password, false);
+      
+      //cleare textfilen users.txt
+      userFile.clearFile("Users.txt");
+      
+      //tilføjer hele arrayet til txt filen.
+      idFind=0;
+      while(users[idFind]!=null) {
+         userFile.addToUser(users[idFind].getID()," "+users[idFind].getUsername()," "+users[idFind].getPassword(), users[idFind].getAdmin());
+         idFind++;
+      }
+      
+   }
+   /*
+   //old shit
    public void createUser(User[] users){
    
       Files userFile = new Files();
@@ -105,7 +143,7 @@ public class Menu{
       scan = new Scanner(System.in);
       String password = scan.next();
       //System.out.println(password);
-      
+      int count = 0;
       int id = 0;
       
       for(int i = 0; users[i]!=null; i++){

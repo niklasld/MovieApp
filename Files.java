@@ -144,15 +144,15 @@ public class Files{
       }
    }
 
-  public void addToUser(String fileName, int ID, String username, String password){
+  public void addToUser(int ID, String username, String password, boolean admin){
       try{
-         FileWriter fileW = new FileWriter(fileName, true);
+         FileWriter fileW = new FileWriter("Users.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + username + " "  + password + " false\n");
+         buffW.write(ID + " " + username + " "  + password + " "+admin+"\n");
          buffW.close();
       }
       catch(Exception e){
-         System.out.println("Error writing to" + fileName);
+         System.out.println("Error writing to Users.txt");
       }
    }
    
