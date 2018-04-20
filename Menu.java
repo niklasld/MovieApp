@@ -25,6 +25,7 @@ public class Menu{
             
                case "1":
                   login(users);
+                  mainMenu(users);
                   break;
                case "2":
                   createUser(users);
@@ -45,7 +46,43 @@ public class Menu{
    
    }
 
-   public void mainMenu(){
+   public void mainMenu(User[] users){
+      if(loginMatch == true) {
+         while(run == 1) {
+            System.out.println("\n::::::::::::::::::::::::::::Welcome to::::::::::::::::::::::::::::");
+            System.out.println(":::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+            System.out.println("Please select one of the followings options.");
+            System.out.println("\t1. Search Movies/Actors \n\t2. Show Favorites\n\t4. Show Movies Watched\n\t5. Quit");
+            if(admin == true) {
+               System.out.println("\tAdmin functions\n\t6. Add Movie\n\t7. Add Actor");
+            }
+            
+            scan = new Scanner(System.in);
+            
+            if(scan.hasNext()){
+            
+               switch(scan.next()){
+               
+                  case "1":
+                     login(users);
+                     mainMenu(users);
+                     break;
+                  case "2":
+                     createUser(users);
+                     break;
+                  case "3":
+                     //quit
+                     run = 0;
+                     break;
+                  default:
+                     System.out.println("Invalid option, please try agian... and again... and again.");
+                     break;
+               
+               }
+            
+            }   
+         }
+      }
    }
 
    public void getMovie(){
@@ -89,7 +126,6 @@ public class Menu{
       Files userFile = new Files();
       
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
-      
       System.out.println("Create new user:");
       
       System.out.print("Username: ");
