@@ -52,9 +52,9 @@ public class Menu{
             System.out.println("\n::::::::::::::::::::::::::::Welcome to::::::::::::::::::::::::::::");
             System.out.println(":::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
             System.out.println("Please select one of the followings options.");
-            System.out.println("\t1. Search Movies/Actors \n\t2. Show Favorites\n\t4. Show Movies Watched\n\t5. Quit");
+            System.out.println("\t1. Search Movies/Actors \n\t2. Show Favorites\n\t3. Show Movies Watched\n\t4. Quit");
             if(admin == true) {
-               System.out.println("\tAdmin functions\n\t6. Add Movie\n\t7. Add Actor");
+               System.out.println("\tAdmin functions\n\t5. Add Movie\n\t6. Add Actor");
             }
             
             scan = new Scanner(System.in);
@@ -64,15 +64,28 @@ public class Menu{
                switch(scan.next()){
                
                   case "1":
-                     login(users);
-                     mainMenu(users);
+                     //Search Movie/Actors
                      break;
                   case "2":
-                     createUser(users);
+                     //Show Favorites
                      break;
                   case "3":
+                     //Show movies watched
+                     break;
+                  case "4":
                      //quit
-                     run = 0;
+                     break;
+                  case "5":
+                     if(admin == true) {
+                     
+                     }
+                     //Add Movies
+                     break;
+                  case "6":
+                     if(admin == true) {
+                     
+                     }
+                     //Add Actors
                      break;
                   default:
                      System.out.println("Invalid option, please try agian... and again... and again.");
