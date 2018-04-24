@@ -8,7 +8,7 @@ public class Menu{
    private boolean loginMatch = false;
    private boolean admin = false;
    
-   public void startMenu(User[] users){
+   public void startMenu(User[] users, Movies[] movies, Actor[] actors){
       
       while(run == 1){
    
@@ -25,7 +25,7 @@ public class Menu{
             
                case "1":
                   login(users);
-                  mainMenu(users);
+                  mainMenu(users, movies, actors);
                   break;
                case "2":
                   createUser(users);
@@ -46,7 +46,7 @@ public class Menu{
    
    }
 
-   public void mainMenu(User[] users){
+   public void mainMenu(User[] users, Movies[] movies, Actor[] actors){
       if(loginMatch == true) {
          while(run == 1) {
             System.out.println("\n::::::::::::::::::::::::::::Welcome to::::::::::::::::::::::::::::");
@@ -77,13 +77,13 @@ public class Menu{
                      break;
                   case "5":
                      if(admin == true) {
-                     
+                        addMovie(movies);
                      }
-                     //Add Movies
+                     
                      break;
                   case "6":
                      if(admin == true) {
-                     
+                        addToActors(actors);
                      }
                      //Add Actors
                      break;
@@ -149,25 +149,80 @@ public class Menu{
       scan = new Scanner(System.in);
       String password = scan.next();
       
-      //Finder det første tomme element i array
       int idFind = 0;
       while(users[idFind]!=null) {
          idFind++;
       }
-      //Sætter ID for brugeren som skal oprettes, og opretter brugeren.
+      
       int ID = idFind+1;
       users[idFind] = new User(ID, username, password, false);
       
-      //cleare textfilen users.txt
+      
       userFile.clearFile("Users.txt");
       
-      //tilføjer hele arrayet til txt filen.
       idFind=0;
       while(users[idFind]!=null) {
-         userFile.addToUser(users[idFind].getID()," "+users[idFind].getUsername()," "+users[idFind].getPassword(), users[idFind].getAdmin());
+         userFile.addToUser(users[idFind].getID(),users[idFind].getUsername(),users[idFind].getPassword(), users[idFind].getAdmin());
          idFind++;
       }
       
    }
    
+   public void addMovie(Movies[] movies){
+      Files moviesFile = new Files();
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      System.out.println("Add Movie:");  
+      
+      System.out.print("Movie name: ");
+      scan = new Scanner(System.in);
+      String movieName = scan.nextLine();
+      
+      System.out.print("realeaseYear: ");
+      scan = new Scanner(System.in);
+      int releaseYear = scan.nextInt();
+      
+      int idFind = 0;
+      while(movies[idFind]!=null) {
+         idFind++;
+      }
+      //int ID, String title, int releaseYear
+      int ID = idFind+1;
+      movies[idFind] = new Movies(ID, movieName, releaseYear);
+      
+      moviesFile.clearFile("Movies.txt");
+      idFind=0;
+      while(movies[idFind]!=null){
+         
+         moviesFile.addToMovies(movies[idFind].getID(),movies[idFind].getTitle().replace(" ", "_") ,movies[idFind].getYear());
+         idFind++;
+      }  
+   }
+   public void addToActors(Actor[] actors){
+      Files actorsfile = new Files();
+      
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      System.out.println("Add Movie:");
+      
+      System.out.print("Actor firstname:");
+      scan = new Scanner(System.in);
+      String firstName = scan.next();
+      
+      System.out.print("Actor lastname:");
+      scan = new Scanner(System.in);
+      String lastName = scan.next();
+      
+      int idFind = 0;
+      while(actors[idFind]!=null) {
+         idFind++;
+      }
+      int ID = idFind+1;
+      actors[idFind]= new Actor(ID, firstName, lastName);
+      actorsfile.clearFile("Actors.txt");
+      idFind = 0;
+      while(actors[idFind]!=null){
+      
+         actorsfile.addToActors(actors[idFind].getID(),actors[idFind].getFirstName(),actors[idFind].getLastName());
+         idFind++;
+      }
+   }
 }

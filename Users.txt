@@ -1,4 +1,4 @@
-1  Anders  kodeord123 true
+1  anders  kodeord123 true
 2  Pelle  Langballe false
 3  Frederik  Bonus222 false
 4  Freddy  Gangstah false

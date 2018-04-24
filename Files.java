@@ -120,27 +120,27 @@ public class Files{
          System.out.println("Error writing to" + fileName);
       }  
    }
-   public void addToActors(String fileName, int ID, String firstname, String lastname){
+   public void addToActors(int ID, String firstname, String lastname){
       try{
-         FileWriter fileW = new FileWriter(fileName, true);
+         FileWriter fileW = new FileWriter("Actors.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + firstname + " "  + lastname);
+         buffW.write(ID + " " + firstname + " "  + lastname+ "\n");
          buffW.close();
       }
       catch(Exception e){
-         System.out.println("Error writing to" + fileName);
+         System.out.println("Error writing to" + "Actors.txt");
       }
 
    }
-   public void addToMovies(String fileName, int ID, String title, int releaseYear){
+   public void addToMovies(int ID, String title, int releaseYear){
       try{
-         FileWriter fileW = new FileWriter(fileName, true);
+         FileWriter fileW = new FileWriter("Movies.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + title + " "  + releaseYear);
+         buffW.write(ID + " " + title.replace(" ","_") + " " + releaseYear+"\n");
          buffW.close();
       }
       catch(Exception e){
-         System.out.println("Error writing to" + fileName);
+         System.out.println("Error writing to Movies.txt");
       }
    }
 

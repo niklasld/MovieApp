@@ -11,22 +11,26 @@ public class MovieApp{
       Movies movies[] = new Movies[200000];
       //MovieActorRelation mar[] = new MovieActorRelation[9000000]
       
-      Files movieFile = new Files();
+      Files file = new Files();
       Menu startMenu = new Menu();
       
-      movieFile.createFile("MovieHistory.txt");
-      movieFile.createFile("Users.txt");
-      movieFile.createFile("Movies.txt");
-      movieFile.createFile("Actors.txt");
-      movieFile.createFile("MovieActorRelation.txt");
+      file.createFile("MovieHistory.txt");
+      file.createFile("Users.txt");
+      file.createFile("Movies.txt");
+      file.createFile("Actors.txt");
+      file.createFile("MovieActorRelation.txt");
       
-      movieFile.openFile("Users.txt");
-      movieFile.readUser(users);
+      file.openFile("Users.txt");
+      file.readUser(users);
+      file.openFile("Movies.txt");
+      file.readMovies(movies);
+      file.openFile("Actors.txt");
+      file.readActor(actors);
       System.out.println(users[0].getID()+" "+users[0].getUsername()+" " +users[0].getPassword());
       
-      movieFile.closeFile();
+      file.closeFile();
       
-      startMenu.startMenu(users);
+      startMenu.startMenu(users, movies, actors);
     
    }
 }
