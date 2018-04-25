@@ -2,3 +2,7 @@
 2 Uma Thurmann
 3 Samuel Jackson
 4 David Carradine
+5 Quentin Tarantino
+6 John Travolta
+7 Pam Grier
+8 Robert Forster

@@ -10,7 +10,7 @@ public class MovieApp{
       History historys[] = new History[100000000];
       Movies movies[] = new Movies[200000];
       Favorits favorits[] = new Favorits[100000000];
-      //MovieActorRelation mar[] = new MovieActorRelation[9000000]
+      MovieActorRelation maRelation[] = new MovieActorRelation[9000000];
       
       Files file = new Files();
       Menu startMenu = new Menu();
@@ -30,12 +30,14 @@ public class MovieApp{
       file.readActor(actors);
       file.openFile("Favorits.txt");
       file.readFavorits(favorits);
+      file.openFile("MovieActorRelation.txt");
+      file.readMovieActorRelations(maRelation);
       System.out.println(users[0].getID()+" "+users[0].getUsername()+" " +users[0].getPassword());
       System.out.println(favorits[0].getUserID()+" "+favorits[0].getMovieID());
       
       file.closeFile();
       
-      String test = "hello";
+      /*String test = "hello";
       String search = "hElLo";
       search = search.toLowerCase();
       
@@ -43,9 +45,9 @@ public class MovieApp{
          System.out.println("Yes is does!");
       } else {
          System.out.println("No is doesn't!");
-      }
+      }*/
       
-      startMenu.startMenu(users, movies, actors, favorits);
+      startMenu.startMenu(users, movies, actors, favorits, maRelation);
     
    }
 }

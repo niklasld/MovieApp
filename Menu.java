@@ -10,7 +10,7 @@ public class Menu{
    private boolean admin = false;
    private int loginID;
    
-   public void startMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits){
+   public void startMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
       
       while(run == 1){
    
@@ -27,7 +27,7 @@ public class Menu{
             
                case "1":
                   login(users);
-                  mainMenu(users, movies, actors, favorits);
+                  mainMenu(users, movies, actors, favorits, maRelation);
                   break;
                case "2":
                   createUser(users);
@@ -48,7 +48,7 @@ public class Menu{
    
    }
 
-   public void mainMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits){
+   public void mainMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
       while(run == 1 && loginMatch == true) {
          System.out.println("\n::::::::::::::::::::::::::::Welcome to::::::::::::::::::::::::::::");
          System.out.println(":::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -66,7 +66,7 @@ public class Menu{
             
                case "1":
                   //Search Movie/Actors
-                  search(users, movies, actors, favorits);
+                  search(users, movies, actors, favorits, maRelation);
                   break;
                case "2":
                   //Show Favorites
@@ -255,7 +255,7 @@ public class Menu{
    
    }
    
-   public void search(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits){
+   public void search(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
    
       Files moviesFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -290,9 +290,9 @@ public class Menu{
          
          if(scan.hasNextInt()){
             int movieID = scan.nextInt();
-            movieID--;
+            //movieID--;
             movieInfo = true;
-            selectMovie(movieID, users, movies, actors, favorits);
+            selectMovie(movieID, users, movies, actors, favorits, maRelation);
          } else {
             System.out.println("Go home Jarl, you are drunk!");
          }
@@ -301,7 +301,7 @@ public class Menu{
    
    }
    
-   public void selectMovie(int ID ,User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits){
+   public void selectMovie(int ID ,User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
       while(movieInfo == true){
          Files multiFile = new Files();
          System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -320,13 +320,39 @@ public class Menu{
          }
          
          System.out.println();
+         System.out.print("Actors: ");
+         
+         count = 0;
+         int actorNumber = 0;
+         boolean first = true;
+         while(maRelation[count]!=null){
+            
+            if(maRelation[count].getMovieID() == ID){
+               
+               actorNumber = maRelation[count].getActorID() - 1;
+               if (first == false){
+                  System.out.print(", ");
+               }
+               System.out.print(actors[actorNumber].getFirstName() + " " + actors[actorNumber].getLastName());
+               //System.out.println(favorits[count].getMovieID());
+               first = false;
+                 
+            }
+            count++;   
+         }
+         
+         System.out.println();
+         System.out.println();
          System.out.println("Options:");
          System.out.println("1. Go to main menu");
          System.out.println("2. add to favorite");
          System.out.println("3. add to watched movies");
-         System.out.println("4. add actor");
-         System.out.println("5. remove actor");
-         System.out.println("6. edit movie");
+         if(admin==true){
+            System.out.println("Admin functions");
+            System.out.println("4. add actor");
+            System.out.println("5. remove actor");
+            System.out.println("6. edit movie");
+         }
          scan = new Scanner(System.in);
          
          if(scan.hasNext()){
@@ -344,12 +370,18 @@ public class Menu{
                   break;
                case "4":
                   //add actor
+                  if(admin==true){
+                  }
                   break;
                case "5":
                   //remove actor
+                  if(admin==true){
+                  }
                   break;
                case "6":
                   //edit movie
+                  if(admin==true){
+                  }
                   break;
                default:
                   System.out.println("Invalid option, please try agian... and again... and again.");

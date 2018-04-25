@@ -107,17 +107,18 @@ public class Files{
    
    }
    
-   /*public void readMovieActorRelations(MovieActorRelation[] mar){
+   public void readMovieActorRelations(MovieActorRelation[] maRelation){
       int counter = 0;
       while(fileScan.hasNext()) {
-         int ID = fileScan.nextInt();
-         String title = fileScan.next();
-         int realeaseYear = fileScan.nextInt();
-         movies[counter] = new Movies(ID, title, realeaseYear);
+         
+         int movieID = fileScan.nextInt();
+         int actorID = fileScan.nextInt();
+         maRelation[counter] = new MovieActorRelation(movieID, actorID);
          counter++;
       }
         
-   } */ 
+   }
+    
    public void closeFile(){
    
       fileScan.close();
@@ -188,19 +189,17 @@ public class Files{
    
    }
    
-   /*public void addToMovieActorRelation(String fileName){
+   public void addToMovieActorRelation(int movieID, int actorID){
       try{
-         FileWriter fileW = new FileWriter(fileName, true);
+         FileWriter fileW = new FileWriter("MovieActorRelation.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID);
-         //todo
+         buffW.write(movieID+" "+actorID+"\n");
          buffW.close();
       }
       catch(Exception e){
-         System.out.println("Error writing to" + fileName);
-         //todo
+         System.out.println("Error writing to MovieActorRelation.txt");
       }
-   }*/ 
+   }
    
    public void clearFile(String fileName){
       try{
