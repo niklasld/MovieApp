@@ -102,9 +102,8 @@ public class Menu{
       }
    }
 
-   public void getMovie(){
-   //return Movie; 
-   }
+ 
+   
    
    public void login(User[] users) {
       
