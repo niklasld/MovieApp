@@ -92,6 +92,21 @@ public class Files{
       }
         
    }
+   
+   public void readFavorits(Favorits[] favorits){
+   
+      int counter = 0;
+      while(fileScan.hasNext()){
+      
+         int userID = fileScan.nextInt();
+         int movieID = fileScan.nextInt();
+         favorits[counter] = new Favorits(userID, movieID);
+         counter++;
+      
+      }
+   
+   }
+   
    /*public void readMovieActorRelations(MovieActorRelation[] mar){
       int counter = 0;
       while(fileScan.hasNext()) {
@@ -156,8 +171,23 @@ public class Files{
       }
    }
    
-
-
+   public void addToFavorits(int userID, int movieID){
+   
+      try{
+      
+         FileWriter fileW = new FileWriter("Favorits.txt", true);
+         BufferedWriter buffW = new BufferedWriter(fileW);
+         buffW.write(userID+" "+movieID+"\n");
+         buffW.close();
+      
+      }catch(Exception e){
+      
+         System.out.println("Error writing to Favorits.txt");
+      
+      }
+   
+   }
+   
    /*public void addToMovieActorRelation(String fileName){
       try{
          FileWriter fileW = new FileWriter(fileName, true);
