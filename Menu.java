@@ -12,7 +12,7 @@ public class Menu{
    private boolean admin = false;
    private int loginID;
    
-   public void startMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
+   public void startMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched){
       
       while(run == 1){
    
@@ -29,7 +29,7 @@ public class Menu{
             
                case "1":
                   login(users);
-                  mainMenu(users, movies, actors, favorits, maRelation);
+                  mainMenu(users, movies, actors, favorits, maRelation, watched);
                   break;
                case "2":
                   createUser(users);
@@ -50,7 +50,7 @@ public class Menu{
    
    }
 
-   public void mainMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
+   public void mainMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched){
       while(run == 1 && loginMatch == true) {
          System.out.println("\n::::::::::::::::::::::::::::Welcome to::::::::::::::::::::::::::::");
          System.out.println(":::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -68,7 +68,7 @@ public class Menu{
             
                case "1":
                   //Search Movie/Actors
-                  searchMenu(users, movies, actors, favorits, maRelation);
+                  searchMenu(users, movies, actors, favorits, maRelation, watched);
                   break;
                case "2":
                   //Show Favorites
@@ -76,6 +76,7 @@ public class Menu{
                   break;
                case "3":
                   //Show movies watched
+                  readWatched(watched, movies);
                   break;
                case "4":
                   //quit
@@ -256,7 +257,30 @@ public class Menu{
    
    }
    
-   public void searchMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+   public void readWatched(Watched[] watched, Movies[] movies){
+   
+      Files watchedfile = new Files();
+      
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      System.out.println("Your watched list:");
+      
+      int count = 0;
+      int movieNumber = 0;
+      while(watched[count]!=null){
+         
+         if(watched[count].getUserID() == loginID){
+            
+            movieNumber = watched[count].getMovieID() - 1;
+            System.out.println(movies[movieNumber].getTitle().replace("_", " "));
+            //System.out.println(favorits[count].getMovieID());
+              
+         }
+         count++;   
+      }
+   
+   }
+   
+   public void searchMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched) {
       Files actorFile = new Files();
       
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -272,12 +296,12 @@ public class Menu{
          search = scan.nextLine();
          if(search.equals("1")) {
             //search movie
-            searchMovie(users, movies, actors, favorits, maRelation);
+            searchMovie(users, movies, actors, favorits, maRelation, watched);
             searchInfo = false;
          }
          else if(search.equals("2")) {
             //search actor
-            searchActor(users, movies, actors, favorits, maRelation);
+            searchActor(users, movies, actors, favorits, maRelation, watched);
             searchInfo = false;
          }
          else {
@@ -287,7 +311,7 @@ public class Menu{
       
    }
    
-   public void searchActor(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+   public void searchActor(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched) {
       
       Files moviesFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -325,7 +349,7 @@ public class Menu{
             int actorID = scan.nextInt();
             
             actorInfo = true;
-            selectActor(actorID, users, movies, actors, favorits, maRelation);
+            selectActor(actorID, users, movies, actors, favorits, maRelation, watched);
          } else {
             System.out.println("Go home Jarl");
          }
@@ -334,7 +358,7 @@ public class Menu{
    
    }
    
-   public void selectActor(int actorID, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+   public void selectActor(int actorID, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched) {
       Files actorFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
       System.out.println("Search result:");
@@ -360,11 +384,11 @@ public class Menu{
       if(scan.hasNextInt()) {
          movieNumber = scan.nextInt(); 
          movieInfo = true;
-         selectMovie(movieNumber, users, movies, actors, favorits, maRelation);
+         selectMovie(movieNumber, users, movies, actors, favorits, maRelation, watched);
       }  
    }
    
-   public void searchMovie(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
+   public void searchMovie(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched){
    
       Files moviesFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -401,7 +425,7 @@ public class Menu{
             int movieID = scan.nextInt();
             //movieID--;
             movieInfo = true;
-            selectMovie(movieID, users, movies, actors, favorits, maRelation);
+            selectMovie(movieID, users, movies, actors, favorits, maRelation, watched);
          } else {
             System.out.println("Go home Jarl");
          }
@@ -410,7 +434,7 @@ public class Menu{
    
    }
    
-   public void addActorToMovie(int movieID, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+   public void addActorToMovie(int movieID, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched) {
       scan = new Scanner(System.in);
       Files multiFile = new Files();
       int count= 0;
@@ -439,7 +463,7 @@ public class Menu{
       
    }
    
-   public void selectMovie(int ID ,User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
+   public void selectMovie(int ID ,User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched){
       while(movieInfo == true){
          Files multiFile = new Files();
          System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -518,11 +542,23 @@ public class Menu{
                   break;
                case "3":
                   //add to watched movies
+                  count = 0;
+                  while(watched[count]!=null) {
+                     count++;
+                  }
+                  watched[count] = new Watched(loginID, ID);
+                  multiFile.clearFile("Watched.txt");
+                  count = 0;
+                  while(watched[count]!=null) {
+                     multiFile.addToWatched(watched[count].getUserID(), watched[count].getMovieID());
+                     count++;
+                  }
+                  
                   break;
                case "4":
                   //add actor
                   if(admin==true){
-                     addActorToMovie(ID, users, movies, actors, favorits, maRelation);
+                     addActorToMovie(ID, users, movies, actors, favorits, maRelation, watched);
                   }
                   break;
                case "5":

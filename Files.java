@@ -107,6 +107,20 @@ public class Files{
    
    }
    
+   public void readWatched(Watched[] watched){
+   
+      int counter = 0;
+      while(fileScan.hasNext()){
+      
+         int userID = fileScan.nextInt();
+         int movieID = fileScan.nextInt();
+         watched[counter] = new Watched(userID, movieID);
+         counter++;
+      
+      }
+   
+   }
+   
    public void readMovieActorRelations(MovieActorRelation[] maRelation){
       int counter = 0;
       while(fileScan.hasNext()) {
@@ -184,6 +198,23 @@ public class Files{
       }catch(Exception e){
       
          System.out.println("Error writing to Favorits.txt");
+      
+      }
+   
+   }
+   
+   public void addToWatched(int userID, int movieID){
+   
+      try{
+      
+         FileWriter fileW = new FileWriter("Watched.txt", true);
+         BufferedWriter buffW = new BufferedWriter(fileW);
+         buffW.write(userID+" "+movieID+"\n");
+         buffW.close();
+      
+      }catch(Exception e){
+      
+         System.out.println("Error writing to Watched.txt");
       
       }
    

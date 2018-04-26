@@ -11,11 +11,12 @@ public class MovieApp{
       Movies movies[] = new Movies[200000];
       Favorits favorits[] = new Favorits[100000000];
       MovieActorRelation maRelation[] = new MovieActorRelation[9000000];
+      Watched watched[] = new Watched[100000000];
       
       Files file = new Files();
       Menu startMenu = new Menu();
       
-      file.createFile("MovieHistory.txt");
+      file.createFile("Watched.txt");
       file.createFile("Users.txt");
       file.createFile("Movies.txt");
       file.createFile("Actors.txt");
@@ -32,12 +33,14 @@ public class MovieApp{
       file.readFavorits(favorits);
       file.openFile("MovieActorRelation.txt");
       file.readMovieActorRelations(maRelation);
+      file.openFile("Watched.txt");
+      file.readWatched(watched);
       System.out.println(users[0].getID()+" "+users[0].getUsername()+" " +users[0].getPassword());
       System.out.println(favorits[0].getUserID()+" "+favorits[0].getMovieID());
       
       file.closeFile();
       
-      startMenu.startMenu(users, movies, actors, favorits, maRelation);
+      startMenu.startMenu(users, movies, actors, favorits, maRelation, watched);
     
    }
 }
