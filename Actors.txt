@@ -6,3 +6,5 @@
 6 John Travolta
 7 Pam Grier
 8 Robert Forster
+9 Woody Harrelson
+10 Juliette Lewis

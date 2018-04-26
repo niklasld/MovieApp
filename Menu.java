@@ -410,6 +410,35 @@ public class Menu{
    
    }
    
+   public void addActorToMovie(int movieID, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+      scan = new Scanner(System.in);
+      Files multiFile = new Files();
+      int count= 0;
+      int actorNumber = -1;
+      
+      System.out.println("Actors list:");
+      while(actors[count]!=null) {
+         System.out.println(actors[count].getID()+" "+actors[count].getFirstName()+" "+actors[count].getLastName());
+         count++;
+      }
+      System.out.println("\nPlease type in an actor number you wish to add to the movie:");
+      if(scan.hasNextInt()) {
+         actorNumber = scan.nextInt();
+      }
+      count = 0;
+      while(maRelation[count]!=null) {
+         count++;
+      }
+      maRelation[count] = new MovieActorRelation(movieID, actorNumber);
+      multiFile.clearFile("MovieActorRelation.txt");
+      count = 0;
+      while(favorits[count]!=null) {
+         multiFile.addToMovieActorRelation(maRelation[count].getMovieID(), maRelation[count].getActorID());
+         count++;
+      }
+      
+   }
+   
    public void selectMovie(int ID ,User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
       while(movieInfo == true){
          Files multiFile = new Files();
@@ -418,7 +447,7 @@ public class Menu{
          
          int count = 0;
          while(movies[count]!=null){
-            
+         
             if(movies[count].getID() == ID){
                
                System.out.println("Movie title:" + movies[count].getTitle().replace("_", " "));
@@ -474,6 +503,18 @@ public class Menu{
                   break;
                case "2":
                   //add to favorite
+                  count = 0;
+                  while(favorits[count]!=null) {
+                     count++;
+                  }
+                  favorits[count] = new Favorits(loginID, ID);
+                  multiFile.clearFile("Favorits.txt");
+                  count = 0;
+                  while(favorits[count]!=null) {
+                     multiFile.addToFavorits(favorits[count].getUserID(), favorits[count].getMovieID());
+                     count++;
+                  }
+                  
                   break;
                case "3":
                   //add to watched movies
@@ -481,6 +522,7 @@ public class Menu{
                case "4":
                   //add actor
                   if(admin==true){
+                     addActorToMovie(ID, users, movies, actors, favorits, maRelation);
                   }
                   break;
                case "5":
@@ -491,6 +533,24 @@ public class Menu{
                case "6":
                   //edit movie
                   if(admin==true){
+                     scan = new Scanner(System.in);
+                     int input2 = -1;
+                     System.out.println("Please type in a new Title for the movie");
+                     String input = scan.nextLine().replace(" ", "_");
+                     movies[ID-1].setTitle(input);
+                     System.out.println("Please type in release year of the movie");
+                     if(scan.hasNextInt()) {
+                        input2 = scan.nextInt();
+                     }
+                     movies[ID-1].setYear(input2);
+                     
+                     multiFile.clearFile("Movies.txt");
+                     count = 0;
+                     while(movies[count]!=null) {
+                        multiFile.addToMovies(movies[count].getID(),movies[count].getTitle(), movies[count].getYear());
+                        count++;
+                     }
+                     
                   }
                   break;
                default:
