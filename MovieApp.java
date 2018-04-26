@@ -37,16 +37,6 @@ public class MovieApp{
       
       file.closeFile();
       
-      /*String test = "hello";
-      String search = "hElLo";
-      search = search.toLowerCase();
-      
-      if(test.toLowerCase().contains(search)){
-         System.out.println("Yes is does!");
-      } else {
-         System.out.println("No is doesn't!");
-      }*/
-      
       startMenu.startMenu(users, movies, actors, favorits, maRelation);
     
    }

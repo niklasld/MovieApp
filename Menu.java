@@ -6,6 +6,8 @@ public class Menu{
    Scanner scan;
    private int run = 1;
    private boolean movieInfo = false;
+   private boolean actorInfo = false;
+   private boolean searchInfo = false;
    private boolean loginMatch = false;
    private boolean admin = false;
    private int loginID;
@@ -66,7 +68,7 @@ public class Menu{
             
                case "1":
                   //Search Movie/Actors
-                  search(users, movies, actors, favorits, maRelation);
+                  searchMenu(users, movies, actors, favorits, maRelation);
                   break;
                case "2":
                   //Show Favorites
@@ -254,7 +256,115 @@ public class Menu{
    
    }
    
-   public void search(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
+   public void searchMenu(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+      Files actorFile = new Files();
+      
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      System.out.println("Select a search option:"); 
+      System.out.println("\n1. Search by moviename\n2. Search by actorname");
+      
+      scan = new Scanner(System.in);
+      String search = "";
+      //String search = scan.nextLine();
+      //if(movieInfo ==) {
+      searchInfo = true;
+      while(searchInfo == true){
+         search = scan.nextLine();
+         if(search.equals("1")) {
+            //search movie
+            searchMovie(users, movies, actors, favorits, maRelation);
+            searchInfo = false;
+         }
+         else if(search.equals("2")) {
+            //search actor
+            searchActor(users, movies, actors, favorits, maRelation);
+            searchInfo = false;
+         }
+         else {
+            System.out.println("Try again");
+         }
+      }
+      
+   }
+   
+   public void searchActor(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+      
+      Files moviesFile = new Files();
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      System.out.println("Search:");  
+      
+      System.out.print("Enter actor name: ");
+      scan = new Scanner(System.in);
+      String search = scan.nextLine();
+      search = search.toLowerCase();
+      
+      int count = 0;
+      boolean result = false;
+      
+      while(actors[count]!=null){
+         
+         if(actors[count].getFirstName().toLowerCase().contains(search) || actors[count].getLastName().toLowerCase().contains(search)){
+            
+            result = true;
+            System.out.println(actors[count].getID() + ". " + actors[count].getFirstName() + " " + actors[count].getLastName());
+              
+         }
+         count++;   
+      }
+      
+      if(result == false){
+      
+         System.out.println("No actors mached: " + search);
+      
+      } else {
+      
+         System.out.print("Enter actor number: ");
+         scan = new Scanner(System.in);
+         
+         if(scan.hasNextInt()){
+            int actorID = scan.nextInt();
+            
+            actorInfo = true;
+            selectActor(actorID, users, movies, actors, favorits, maRelation);
+         } else {
+            System.out.println("Go home Jarl");
+         }
+      
+      }
+   
+   }
+   
+   public void selectActor(int actorID, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation) {
+      Files actorFile = new Files();
+      System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
+      System.out.println("Search result:");
+      
+      int arrayID = actorID-1;
+      System.out.println(actors[arrayID].getFirstName() + " " + actors[arrayID].getLastName() + " is in the following movies: "); 
+      
+      int count = 0;
+      int movieNumber = 0;
+      while(maRelation[count]!=null){
+         
+         if(maRelation[count].getActorID() == actorID){
+            movieNumber = maRelation[count].getMovieID() - 1;
+            System.out.println(movies[movieNumber].getID()+" "+movies[movieNumber].getTitle().replace("_", " "));
+              
+         }
+         count++;
+            
+      }
+      scan = new Scanner(System.in);
+      
+      
+      if(scan.hasNextInt()) {
+         movieNumber = scan.nextInt(); 
+         movieInfo = true;
+         selectMovie(movieNumber, users, movies, actors, favorits, maRelation);
+      }  
+   }
+   
+   public void searchMovie(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation){
    
       Files moviesFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -293,7 +403,7 @@ public class Menu{
             movieInfo = true;
             selectMovie(movieID, users, movies, actors, favorits, maRelation);
          } else {
-            System.out.println("Go home Jarl, you are drunk!");
+            System.out.println("Go home Jarl");
          }
       
       }
@@ -360,6 +470,7 @@ public class Menu{
             
                case "1":
                   movieInfo = false;
+                  //mainMenu(users, movies, actors, favorits, maRelation);
                   break;
                case "2":
                   //add to favorite
