@@ -260,7 +260,9 @@ public class Menu{
          if(favorits[count].getUserID() == loginID){
             
             movieNumber = favorits[count].getMovieID() - 1;
-            System.out.println(movies[movieNumber].getTitle().replace("_", " "));
+            if(movies[movieNumber].getVisible() == true){
+               System.out.println(movies[movieNumber].getTitle().replace("_", " "));
+            }
             //System.out.println(favorits[count].getMovieID());
               
          }
@@ -283,7 +285,9 @@ public class Menu{
          if(watched[count].getUserID() == loginID){
             
             movieNumber = watched[count].getMovieID() - 1;
-            System.out.println(movies[movieNumber].getTitle().replace("_", " "));
+            if(movies[movieNumber].getVisible() == true){
+               System.out.println(watched[count].getDate()+ " "+ movies[movieNumber].getTitle().replace("_", " "));
+            }
             //System.out.println(favorits[count].getMovieID());
               
          }
@@ -594,14 +598,33 @@ public class Menu{
                case "3":
                   //add to watched movies
                   count = 0;
+                  int day = 0;
+                  int month = 0;
+                  int year = 0;
                   while(watched[count]!=null) {
                      count++;
                   }
-                  watched[count] = new Watched(loginID, ID);
+                  System.out.println("Please enter day you watched selected movie");
+                  scan = new Scanner(System.in);
+                  if(scan.hasNextInt()) {
+                     day = scan.nextInt();
+                  
+                  }   
+                  System.out.println("Please enter month you watched selected movie");
+                  scan = new Scanner(System.in);
+                  if (scan.hasNextInt()){
+                     month = scan.nextInt();
+                  }   
+                  System.out.println("Please  enter the year you watched selected movie");
+                  scan = new Scanner(System.in);
+                  if(scan.hasNextInt()){
+                     year = scan.nextInt();
+                  }
+                  watched[count] = new Watched(loginID, ID, day, month, year);
                   multiFile.clearFile("Watched.txt");
                   count = 0;
                   while(watched[count]!=null) {
-                     multiFile.addToWatched(watched[count].getUserID(), watched[count].getMovieID());
+                     multiFile.addToWatched(watched[count].getUserID(), watched[count].getMovieID(),watched[count].getDay(),watched[count].getMonth(),watched[count].getYear());
                      count++;
                   }
                   

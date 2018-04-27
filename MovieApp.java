@@ -9,9 +9,9 @@ public class MovieApp{
       Actor actors[] = new Actor[1000000];
       History historys[] = new History[100000000];
       Movies movies[] = new Movies[200000];
-      Favorits favorits[] = new Favorits[100000000];
+      Favorits favorits[] = new Favorits[1000000];
       MovieActorRelation maRelation[] = new MovieActorRelation[9000000];
-      Watched watched[] = new Watched[100000000];
+      Watched watched[] = new Watched[1000000];
       
       Files file = new Files();
       Menu startMenu = new Menu();
@@ -35,8 +35,8 @@ public class MovieApp{
       file.readMovieActorRelations(maRelation);
       file.openFile("Watched.txt");
       file.readWatched(watched);
-      System.out.println(users[0].getID()+" "+users[0].getUsername()+" " +users[0].getPassword());
-      System.out.println(favorits[0].getUserID()+" "+favorits[0].getMovieID());
+      //System.out.println(users[0].getID()+" "+users[0].getUsername()+" " +users[0].getPassword());
+      //System.out.println(favorits[0].getUserID()+" "+favorits[0].getMovieID());
       
       file.closeFile();
       

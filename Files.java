@@ -102,10 +102,13 @@ public class Files{
    
       int counter = 0;
       while(fileScan.hasNext()){
-      
+         
          int userID = fileScan.nextInt();
          int movieID = fileScan.nextInt();
-         watched[counter] = new Watched(userID, movieID);
+         int day = fileScan.nextInt();
+         int month = fileScan.nextInt();
+         int year = fileScan.nextInt();
+         watched[counter] = new Watched(userID, movieID, day, month, year);
          counter++;
       
       }
@@ -194,13 +197,13 @@ public class Files{
    
    }
    
-   public void addToWatched(int userID, int movieID){
+   public void addToWatched(int userID, int movieID, int day, int month, int year){
    
       try{
       
          FileWriter fileW = new FileWriter("Watched.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(userID+" "+movieID+"\n");
+         buffW.write(userID+" "+movieID+" " + day + " " + month + " " + year+"\n");
          buffW.close();
       
       }catch(Exception e){
