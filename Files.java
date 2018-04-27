@@ -58,19 +58,7 @@ public class Files{
       }
         
    }
-  
-   public void readHistory(History[] historys){
-      int counter = 0;
-      while(fileScan.hasNext()) {
-         int ID = fileScan.nextInt();
-         int date = fileScan.nextInt();
-         int movieID = fileScan.nextInt();
-         int userID = fileScan.nextInt();
-         historys[counter] = new History(ID, date, movieID, userID);
-         counter++;
-      }
-        
-   } 
+   
    public void readMovies(Movies[] movies){
       int counter = 0;
       while(fileScan.hasNext()) {
@@ -133,17 +121,6 @@ public class Files{
    
    }
 
-   public void addToHistory(String fileName,int ID, int date, int movieID, int userID){
-      try{
-         FileWriter fileW = new FileWriter(fileName, true);
-         BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + date + " "  + movieID + " " + userID);
-         buffW.close();
-      }
-      catch(Exception e){
-         System.out.println("Error writing to" + fileName);
-      }  
-   }
    public void addToActors(int ID, String firstname, String lastname, boolean visible){
       try{
          FileWriter fileW = new FileWriter("Actors.txt", true);

@@ -7,7 +7,6 @@ public class MovieApp{
       
       User users[] = new User[5000000];
       Actor actors[] = new Actor[1000000];
-      History historys[] = new History[100000000];
       Movies movies[] = new Movies[200000];
       Favorits favorits[] = new Favorits[1000000];
       MovieActorRelation maRelation[] = new MovieActorRelation[9000000];
