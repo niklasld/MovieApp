@@ -1,10 +1,10 @@
-1 Brad Pitt
-2 Uma Thurmann
-3 Samuel Jackson
-4 David Carradine
-5 Quentin Tarantino
-6 John Travolta
-7 Pam Grier
-8 Robert Forster
-9 Woody Harrelson
-10 Juliette Lewis
+1 Brad Pitt true
+2 Uma Thurmann false
+3 Samuel Jackson true
+4 David Carradine true
+5 Quentin Tarantino true
+6 John Travolta true
+7 Pam Grier true
+8 Robert Forster true
+9 Woody Harrelson true
+10 Juliette Lewis true

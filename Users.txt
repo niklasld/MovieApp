@@ -1,6 +1,6 @@
-1  anders  kodeord123 true
-2  Pelle  Langballe false
-3  Frederik  Bonus222 false
-4  Freddy  Gangstah false
-5  Felix  Longballs123 false
-6  Arnold  Strongestman12 false
+1  anders  kodeord123 true true
+2  Pelle  Langballe false true
+3  Frederik  Bonus222 false true
+4  Freddy  Gangstah false true
+5  Felix  Longballs123 false true
+6  Arnold  Strongestman12 false true

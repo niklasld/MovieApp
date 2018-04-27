@@ -6,18 +6,6 @@ import static java.nio.file.StandardOpenOption.*;
 
 public class Files{
    Scanner fileScan;
-   // hvilke filer? 
-   //movieHistory.txt / Users.txt 
-   // Movies.txt / Actors.txt /  MovieActorRelations.txt
-   
-   /*
-   
-   File dir = new File("tmp/test");
-   dir.mkdirs();
-   File tmp = new File(dir, "tmp.txt");
-   tmp.createNewFile();
-   
-   a*/
    
    public void createFile(String input){
          final Formatter fileCreate; 
@@ -52,7 +40,8 @@ public class Files{
          String username = fileScan.next();
          String password= fileScan.next();
          boolean admin = fileScan.nextBoolean();
-         users[counter] = new User(ID, username, password, admin);
+         boolean visible = fileScan.nextBoolean();
+         users[counter] = new User(ID, username, password, admin, visible);
          counter++;
       }
         
@@ -63,7 +52,8 @@ public class Files{
          int ID = fileScan.nextInt();
          String firstname = fileScan.next();
          String lastname = fileScan.next();
-         actors[counter] = new Actor(ID, firstname, lastname);
+         boolean visible = fileScan.nextBoolean();
+         actors[counter] = new Actor(ID, firstname, lastname, visible);
          counter++;
       }
         
@@ -87,7 +77,8 @@ public class Files{
          int ID = fileScan.nextInt();
          String title = fileScan.next();
          int realeaseYear = fileScan.nextInt();
-         movies[counter] = new Movies(ID, title, realeaseYear);
+         boolean visible = fileScan.nextBoolean();
+         movies[counter] = new Movies(ID, title, realeaseYear, visible);
          counter++;
       }
         
@@ -150,11 +141,11 @@ public class Files{
          System.out.println("Error writing to" + fileName);
       }  
    }
-   public void addToActors(int ID, String firstname, String lastname){
+   public void addToActors(int ID, String firstname, String lastname, boolean visible){
       try{
          FileWriter fileW = new FileWriter("Actors.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + firstname + " "  + lastname+ "\n");
+         buffW.write(ID + " " + firstname + " "  + lastname+ " " + visible+"\n");
          buffW.close();
       }
       catch(Exception e){
@@ -162,11 +153,11 @@ public class Files{
       }
 
    }
-   public void addToMovies(int ID, String title, int releaseYear){
+   public void addToMovies(int ID, String title, int releaseYear,boolean visible){
       try{
          FileWriter fileW = new FileWriter("Movies.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + title.replace(" ","_") + " " + releaseYear+"\n");
+         buffW.write(ID + " " + title.replace(" ","_") + " " + releaseYear+" " + visible+"\n");
          buffW.close();
       }
       catch(Exception e){
@@ -174,11 +165,11 @@ public class Files{
       }
    }
 
-  public void addToUser(int ID, String username, String password, boolean admin){
+  public void addToUser(int ID, String username, String password, boolean admin, boolean visible){
       try{
          FileWriter fileW = new FileWriter("Users.txt", true);
          BufferedWriter buffW = new BufferedWriter(fileW);
-         buffW.write(ID + " " + username + " "  + password + " "+admin+"\n");
+         buffW.write(ID + " " + username + " "  + password + " "+admin+" "+visible+"\n");
          buffW.close();
       }
       catch(Exception e){

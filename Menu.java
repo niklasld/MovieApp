@@ -57,7 +57,7 @@ public class Menu{
          System.out.println("Please select one of the followings options.");
          System.out.println("\t1. Search Movies/Actors \n\t2. Show Favorites\n\t3. Show Movies Watched\n\t4. Quit");
          if(admin == true) {
-            System.out.println("\tAdmin functions\n\t5. Add Movie\n\t6. Add Actor");
+            System.out.println("\tAdmin functions\n\t5. Add Movie\n\t6. Add Actor\n\t7.Remove Movie\n\t8.Remove Actor");
          }
          
          scan = new Scanner(System.in);
@@ -95,8 +95,20 @@ public class Menu{
                   }
                   //Add Actors
                   break;
+               case "7":
+                  //remove movie
+                  if(admin == true) {
+                     searchMovie(true, users, movies, actors, favorits, maRelation, watched);
+                  }
+                  break;
+               case "8":
+                  //remove actor
+                  if(admin == true) {
+                     searchActor(true, users, movies, actors, favorits, maRelation, watched);
+                  }
+                  break;
                default:
-                  System.out.println("Invalid option, please try agian... and again... and again.");
+                  System.out.println("Invalid option. (Main menu)");
                   break;
             
             }
@@ -163,14 +175,14 @@ public class Menu{
       }
       
       int ID = idFind+1;
-      users[idFind] = new User(ID, username, password, false);
+      users[idFind] = new User(ID, username, password, false, true);
       
       
       userFile.clearFile("Users.txt");
       
       idFind=0;
       while(users[idFind]!=null) {
-         userFile.addToUser(users[idFind].getID(),users[idFind].getUsername(),users[idFind].getPassword(), users[idFind].getAdmin());
+         userFile.addToUser(users[idFind].getID(),users[idFind].getUsername(),users[idFind].getPassword(), users[idFind].getAdmin(), users[idFind].getVisible());
          idFind++;
       }
       
@@ -195,13 +207,13 @@ public class Menu{
       }
       //int ID, String title, int releaseYear
       int ID = idFind+1;
-      movies[idFind] = new Movies(ID, movieName, releaseYear);
+      movies[idFind] = new Movies(ID, movieName, releaseYear, true);
       
       moviesFile.clearFile("Movies.txt");
       idFind=0;
       while(movies[idFind]!=null){
          
-         moviesFile.addToMovies(movies[idFind].getID(),movies[idFind].getTitle().replace(" ", "_") ,movies[idFind].getYear());
+         moviesFile.addToMovies(movies[idFind].getID(),movies[idFind].getTitle().replace(" ", "_") ,movies[idFind].getYear(),movies[idFind].getVisible());
          idFind++;
       }  
    }
@@ -224,12 +236,12 @@ public class Menu{
          idFind++;
       }
       int ID = idFind+1;
-      actors[idFind]= new Actor(ID, firstName, lastName);
+      actors[idFind]= new Actor(ID, firstName, lastName, true);
       actorsfile.clearFile("Actors.txt");
       idFind = 0;
       while(actors[idFind]!=null){
       
-         actorsfile.addToActors(actors[idFind].getID(),actors[idFind].getFirstName(),actors[idFind].getLastName());
+         actorsfile.addToActors(actors[idFind].getID(),actors[idFind].getFirstName(),actors[idFind].getLastName(),actors[idFind].getVisible());
          idFind++;
       }
    }
@@ -296,12 +308,12 @@ public class Menu{
          search = scan.nextLine();
          if(search.equals("1")) {
             //search movie
-            searchMovie(users, movies, actors, favorits, maRelation, watched);
+            searchMovie(false, users, movies, actors, favorits, maRelation, watched);
             searchInfo = false;
          }
          else if(search.equals("2")) {
             //search actor
-            searchActor(users, movies, actors, favorits, maRelation, watched);
+            searchActor(false, users, movies, actors, favorits, maRelation, watched);
             searchInfo = false;
          }
          else {
@@ -311,7 +323,7 @@ public class Menu{
       
    }
    
-   public void searchActor(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched) {
+   public void searchActor(boolean remove, User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched) {
       
       Files moviesFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -328,10 +340,10 @@ public class Menu{
       while(actors[count]!=null){
          
          if(actors[count].getFirstName().toLowerCase().contains(search) || actors[count].getLastName().toLowerCase().contains(search)){
-            
-            result = true;
-            System.out.println(actors[count].getID() + ". " + actors[count].getFirstName() + " " + actors[count].getLastName());
-              
+            if(actors[count].getVisible() == true) {
+               result = true;
+               System.out.println(actors[count].getID() + ". " + actors[count].getFirstName() + " " + actors[count].getLastName());
+            }  
          }
          count++;   
       }
@@ -341,17 +353,38 @@ public class Menu{
          System.out.println("No actors mached: " + search);
       
       } else {
-      
-         System.out.print("Enter actor number: ");
+         if(remove==false) {
+            System.out.print("Enter actor number: ");
+         }
+         else if(remove==true) {
+            System.out.print("Enter actor number to remove: ");
+         }
+         
          scan = new Scanner(System.in);
          
-         if(scan.hasNextInt()){
+         if(scan.hasNextInt() && remove == false){
             int actorID = scan.nextInt();
             
             actorInfo = true;
             selectActor(actorID, users, movies, actors, favorits, maRelation, watched);
-         } else {
-            System.out.println("Go home Jarl");
+         } 
+         
+         else if(scan.hasNextInt() && remove == true) {
+            int actorID = scan.nextInt();
+            actors[actorID-1].setVisible(false);
+            System.out.println(actors[actorID].getVisible());
+            System.out.println("Actor removed...");
+            moviesFile.clearFile("Actors.txt");
+            int idFind = 0;
+            
+            while(actors[idFind]!=null){
+            
+               moviesFile.addToActors(actors[idFind].getID(),actors[idFind].getFirstName(),actors[idFind].getLastName(),actors[idFind].getVisible());
+               idFind++;
+            }
+         }
+         else {
+            System.out.println("Go home Jarl(Search actor function error)");
          }
       
       }
@@ -388,7 +421,7 @@ public class Menu{
       }  
    }
    
-   public void searchMovie(User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched){
+   public void searchMovie(boolean remove,User[] users, Movies[] movies, Actor[] actors, Favorits[] favorits, MovieActorRelation[] maRelation, Watched[] watched){
    
       Files moviesFile = new Files();
       System.out.println("\n:::::::::::::::::::::::Leek movie database::::::::::::::::::::::::\n");
@@ -403,7 +436,7 @@ public class Menu{
       boolean result = false;
       while(movies[count]!=null){
          
-         if(movies[count].getTitle().toLowerCase().contains(search)){
+         if(movies[count].getTitle().toLowerCase().contains(search) && movies[count].getVisible() == true){
             
             result = true;
             System.out.println(movies[count].getID() + ". " + movies[count].getTitle().replace("_", " "));
@@ -416,18 +449,36 @@ public class Menu{
       
          System.out.println("No movie mached: " + search.replace("_", " "));
       
-      } else {
+      } 
+      
+      else if(result == true) {
       
          System.out.print("Enter movie number: ");
          scan = new Scanner(System.in);
          
-         if(scan.hasNextInt()){
+         if(scan.hasNextInt() && remove == false){
             int movieID = scan.nextInt();
             //movieID--;
             movieInfo = true;
             selectMovie(movieID, users, movies, actors, favorits, maRelation, watched);
-         } else {
-            System.out.println("Go home Jarl");
+         } 
+         else if(scan.hasNextInt() && remove == true) {
+            int moviesID = scan.nextInt();
+            movies[moviesID-1].setVisible(false);
+            //System.out.println(movies[moviesID].getVisible());
+            System.out.println("Movie removed...");
+            moviesFile.clearFile("Movies.txt");
+            int idFind = 0;
+            
+            while(movies[idFind]!=null){
+            
+               moviesFile.addToMovies(movies[idFind].getID(),movies[idFind].getTitle(),movies[idFind].getYear(),movies[idFind].getVisible());
+               idFind++;
+            }
+         }
+         
+         else {
+            System.out.println("Go home Jarl (search movie method)");
          }
       
       }
@@ -489,7 +540,7 @@ public class Menu{
          boolean first = true;
          while(maRelation[count]!=null){
             
-            if(maRelation[count].getMovieID() == ID){
+            if(maRelation[count].getMovieID() == ID && actors[maRelation[count].getActorID()-1].getVisible() == true){
                
                actorNumber = maRelation[count].getActorID() - 1;
                if (first == false){
@@ -564,6 +615,7 @@ public class Menu{
                case "5":
                   //remove actor
                   if(admin==true){
+                     
                   }
                   break;
                case "6":
@@ -583,7 +635,7 @@ public class Menu{
                      multiFile.clearFile("Movies.txt");
                      count = 0;
                      while(movies[count]!=null) {
-                        multiFile.addToMovies(movies[count].getID(),movies[count].getTitle(), movies[count].getYear());
+                        multiFile.addToMovies(movies[count].getID(),movies[count].getTitle(), movies[count].getYear(),movies[count].getVisible());
                         count++;
                      }
                      
